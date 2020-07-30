@@ -31,5 +31,5 @@ class PlayerListViewModel: ObservableObject {
         }
         .resume()
     }
-    
+
 }
