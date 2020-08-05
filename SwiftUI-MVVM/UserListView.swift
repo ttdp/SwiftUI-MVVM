@@ -1,5 +1,5 @@
 //
-//  SearchView.swift
+//  UserListView.swift
 //  SwiftUI-MVVM
 //
 //  Created by Tian Tong on 7/26/20.
@@ -8,14 +8,20 @@
 
 import SwiftUI
 
-struct SearchView: View {
+struct UserListView: View {
     
     @ObservedObject var viewModel = SearchViewModel()
     
+    @State private var text: String = ""
+    
     var body: some View {
         NavigationView {
-            List(viewModel.users) { user in
-                UserView(user: user)
+            VStack {
+                SearchBar(text: $text)
+                
+                List(viewModel.users) { user in
+                    UserView(user: user)
+                }
             }
             .navigationBarTitle("Go Rest")
         }
@@ -41,3 +47,13 @@ struct UserView: View {
     }
     
 }
+
+extension UIApplication {
+    func endEditing(_ force: Bool) {
+        self.windows
+            .filter{$0.isKeyWindow}
+            .first?
+            .endEditing(force)
+    }
+}
+
