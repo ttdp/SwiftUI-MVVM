@@ -10,18 +10,11 @@ import Foundation
 
 class SearchViewModel: ObservableObject {
     
-    
     @Published var users: [User] = []
     
-    func searchFirstName(_ text: String) {
-        
-    }
-    
-    func searchLastName(_ text: String) {
-        
-    }
-    
-    // SmT9aBvZYtCz3yxZlJlJPTS7rfNdD155Erwu
+    /* Go Rest API Token
+     SmT9aBvZYtCz3yxZlJlJPTS7rfNdD155Erwu
+     */
     
     //https://gorest.co.in/public-api/users?first_name=tian&_format=json&access-token=SmT9aBvZYtCz3yxZlJlJPTS7rfNdD155Erwu
     
