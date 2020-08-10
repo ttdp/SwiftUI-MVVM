@@ -17,3 +17,15 @@ struct User: Decodable, Identifiable {
     let firstName: String
     let lastName: String
 }
+
+extension User {
+    init(name: String) {
+        self.id = UUID().uuidString
+        self.firstName = name
+        self.lastName = ""
+    }
+    
+    var name: String {
+        return "\(firstName) \(lastName)"
+    }
+}

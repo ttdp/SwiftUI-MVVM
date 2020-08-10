@@ -12,21 +12,19 @@ struct UserListView: View {
     
     @ObservedObject var viewModel = SearchViewModel()
     
-    @State private var text: String = ""
-    
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(text: $text)
+                SearchBar(text: $viewModel.text)
                 
-                List(viewModel.users) { user in
+                List(viewModel.players) { user in
                     UserView(user: user)
                 }
             }
             .navigationBarTitle("Go Rest")
         }
         .onAppear {
-            self.viewModel.fetchUsers()
+//            self.viewModel.fetchUsers()
         }
     }
     
@@ -42,7 +40,7 @@ struct UserView: View {
     
     var body: some View {
         HStack {
-            Text("\(user.firstName) \(user.lastName)")
+            Text(user.name)
         }
     }
     

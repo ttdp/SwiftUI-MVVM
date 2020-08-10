@@ -7,16 +7,30 @@
 //
 
 import Foundation
+import Combine
 
 class SearchViewModel: ObservableObject {
     
-    @Published var users: [User] = []
+    @Published private var users: [User] = [User(name: "Leanne Graham"), User(name: "Matt Tian"), User(name: "Ervin Howell"), User(name: "Clementine Bauch"), User(name: "Chelsey Dietrich"),
+        User(name: "Kurtis Weissnat"), User(name: "Glenna Reichert"), User(name: "Clementina DuBuque")]
     
     /* Go Rest API Token
      SmT9aBvZYtCz3yxZlJlJPTS7rfNdD155Erwu
      */
     
     //https://gorest.co.in/public-api/users?first_name=tian&_format=json&access-token=SmT9aBvZYtCz3yxZlJlJPTS7rfNdD155Erwu
+    
+    @Published var text = ""
+    
+    @Published private(set) var players = [User(name: "Tong Tian"), User(name: "Matt Tian"), User(name: "Molly Tian"), User(name: "Yan Shao"), User(name: "Yue Ming Shao")]
+    
+    private var cancellable: AnyCancellable?
+    
+    init() {
+        cancellable = $text.sink { value in
+            self.players = value.isEmpty ? self.users : self.users.filter { $0.firstName.lowercased().contains(value.lowercased()) }
+        }
+    }
     
     func fetchUsers() {
         let url = URL(string: "https://gorest.co.in/public-api/users?_format=json&access-token=SmT9aBvZYtCz3yxZlJlJPTS7rfNdD155Erwu&first_name=tian")!
@@ -33,6 +47,7 @@ class SearchViewModel: ObservableObject {
             
             DispatchQueue.main.async {
                 self.users = users
+                print(users)
             }
         }
         .resume()
