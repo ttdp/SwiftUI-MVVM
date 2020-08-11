@@ -10,8 +10,14 @@ import SwiftUI
 
 struct UserListView: View {
     
+    // Property
+    let greeting = "Hello Folks"
+    
+    // @State
+    @State private var isGenderOn = true
+
+    // ObservableObject & @ObservedObject
     @ObservedObject var viewModel = ViewModel()
-    @State var isGenderOn = true
     
     var body: some View {
         NavigationView {
@@ -22,7 +28,7 @@ struct UserListView: View {
                     UserView(user: user, isGenderOn: self.$isGenderOn)
                 }
             }
-            .navigationBarTitle("Users")
+            .navigationBarTitle(greeting)
             .navigationBarItems(trailing: Toggle("Gender", isOn: $isGenderOn))
             .onAppear {
                 self.viewModel.fetchUsers()
@@ -34,7 +40,10 @@ struct UserListView: View {
 
 struct UserView: View {
     
+    // Property
     let user: User
+    
+    // @Binding
     @Binding var isGenderOn: Bool
     
     var body: some View {
@@ -46,6 +55,9 @@ struct UserView: View {
             if isGenderOn {
                 Text(user.gender ? "🙎🏻‍♂️" : "🙎🏻‍♀️")
             }
+        }
+        .onTapGesture {
+            self.isGenderOn.toggle()
         }
     }
     

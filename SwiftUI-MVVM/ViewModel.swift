@@ -11,12 +11,11 @@ import Combine
 
 class ViewModel: ObservableObject {
 
+    private var cancellable: AnyCancellable?
     private var users: [User] = []
     
     @Published private(set) var result: [User] = []
     @Published var text = ""
-    
-    private var cancellable: AnyCancellable?
     
     init() {
         cancellable = $text.sink { value in

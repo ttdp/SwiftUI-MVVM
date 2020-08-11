@@ -15,11 +15,9 @@ struct User: Identifiable {
 }
 
 extension User {
-    
     init(name: String, gender: Bool) {
         self.id = UUID().uuidString
         self.name = name
         self.gender = gender
     }
-    
 }
