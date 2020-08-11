@@ -10,21 +10,23 @@ import SwiftUI
 
 struct UserListView: View {
     
-    @ObservedObject var viewModel = SearchViewModel()
+    @ObservedObject var viewModel = ViewModel()
+    @State var isGenderOn = true
     
     var body: some View {
         NavigationView {
             VStack {
                 SearchBar(text: $viewModel.text)
                 
-                List(viewModel.players) { user in
-                    UserView(user: user)
+                List(viewModel.result) { user in
+                    UserView(user: user, isGenderOn: self.$isGenderOn)
                 }
             }
-            .navigationBarTitle("Go Rest")
-        }
-        .onAppear {
-//            self.viewModel.fetchUsers()
+            .navigationBarTitle("Users")
+            .navigationBarItems(trailing: Toggle("Gender", isOn: $isGenderOn))
+            .onAppear {
+                self.viewModel.fetchUsers()
+            }
         }
     }
     
@@ -33,25 +35,18 @@ struct UserListView: View {
 struct UserView: View {
     
     let user: User
-    
-    init(user: User) {
-        self.user = user
-    }
+    @Binding var isGenderOn: Bool
     
     var body: some View {
         HStack {
             Text(user.name)
+            
+            Spacer()
+            
+            if isGenderOn {
+                Text(user.gender ? "🙎🏻‍♂️" : "🙎🏻‍♀️")
+            }
         }
     }
     
 }
-
-extension UIApplication {
-    func endEditing(_ force: Bool) {
-        self.windows
-            .filter{$0.isKeyWindow}
-            .first?
-            .endEditing(force)
-    }
-}
-

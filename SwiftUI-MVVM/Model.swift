@@ -8,24 +8,18 @@
 
 import Foundation
 
-struct GoRestJSON: Decodable {
-    let result: [User]
-}
-
-struct User: Decodable, Identifiable {
+struct User: Identifiable {
     let id: String
-    let firstName: String
-    let lastName: String
+    let name: String
+    let gender: Bool
 }
 
 extension User {
-    init(name: String) {
+    
+    init(name: String, gender: Bool) {
         self.id = UUID().uuidString
-        self.firstName = name
-        self.lastName = ""
+        self.name = name
+        self.gender = gender
     }
     
-    var name: String {
-        return "\(firstName) \(lastName)"
-    }
 }
